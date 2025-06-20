@@ -60,4 +60,14 @@ app.post('/api/logout', (req, res) => {
     });
 });
 
+// Get dogs for the logged-in owner
+app.get('/api/my-dogs', (req, res) => {
+    if (!req.session.user || req.session.user.role !== 'owner') {
+        return res.status(401).json({ error: 'Not authorized' });
+    }
+    db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [req.session.user.id])
+        .then(([rows]) => res.json(rows))
+        .catch((err) => res.status(500).json({ error: 'Database error' }));
+});
+
 module.exports = app;
