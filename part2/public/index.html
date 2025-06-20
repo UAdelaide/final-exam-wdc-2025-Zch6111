@@ -1,51 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Dog of the Day - Dog Walking Service</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>
     /* Intentionally poor contrast and cluttered styles */
-    body {
-      background: #fff;
-      color: #ccc;
-      font-size: 18px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .step {
-      margin: 20px 0;
-    }
-
-    .busy-box {
-      border: 2px dashed #aaa;
-      padding: 20px;
-      margin: 10px 0;
-      background: #f9f9f9;
-    }
-
-    .nav {
-      margin-bottom: 20px;
-    }
-
-    .nav a {
-      margin-right: 10px;
-      color: #eee;
-      background: #eee;
-    }
-
+    body { background: #fff; color: #ccc; font-size: 18px; }
+    .hidden { display: none; }
+    .step { margin: 20px 0; }
+    .busy-box { border: 2px dashed #aaa; padding: 20px; margin: 10px 0; background: #f9f9f9; }
+    .nav { margin-bottom: 20px; }
+    .nav a { margin-right: 10px; color: #eee; background: #eee; }
     /* No focus styles for accessibility break */
-    a,
-    button {
-      outline: none;
-    }
+    a, button { outline: none; }
   </style>
 </head>
-
 <body>
   <div id="app">
     <div class="nav">
@@ -146,5 +116,4 @@
     }).mount('#app');
   </script>
 </body>
-
 </html>
