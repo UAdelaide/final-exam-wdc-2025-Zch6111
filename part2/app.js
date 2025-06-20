@@ -67,7 +67,7 @@ app.get('/api/my-dogs', (req, res) => {
     }
     db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [req.session.user.id])
         .then(([rows]) => { res.json(rows); })
-        .catch(() => res.status(500).json({ error: 'Database error' }));
+        .catch((err) => res.status(500).json({ error: 'Database error' }));
 });
 
 module.exports = app;
