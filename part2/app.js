@@ -66,7 +66,7 @@ app.get('/api/my-dogs', (req, res) => {
         return res.status(401).json({ error: 'Not authorized' });
     }
     db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [req.session.user.id])
-        .then(([rows]) => res.json(rows))
+        .then(([rows]) => { res.json(rows); })
         .catch(() => res.status(500).json({ error: 'Database error' }));
 });
 
