@@ -37,6 +37,30 @@
       <div v-else-if="role === 'walker'">
         Redirecting to Walker Dashboard...
       </div>
+      <div v-if="loggedIn">
+        <h2>All Dogs</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(dog, i) in dogs" :key="dog.dog_name + i">
+              <td>
+                <img :src="dogPhotos[i]" alt="dog photo" width="80" v-if="dogPhotos[i]">
+                <span v-else>Loading...</span>
+              </td>
+              <td>{{ dog.dog_name }}</td>
+              <td>{{ dog.size }}</td>
+              <td>{{ dog.owner_username }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -49,7 +73,9 @@
           password: '',
           error: '',
           loggedIn: false,
-          role: ''
+          role: '',
+          dogs: [],
+          dogPhotos: []
         }
       },
       methods: {
@@ -76,7 +102,22 @@
           } catch (e) {
             this.error = 'Server error';
           }
+        },
+        async loadDogs() {
+          const res = await fetch('/api/dogs');
+          this.dogs = await res.json();
+          // Fetch a random photo for each dog
+          this.dogPhotos = await Promise.all(this.dogs.map(
+            async () => {
+              const resp = await fetch('https://dog.ceo/api/breeds/image/random');
+              const data = await resp.json();
+              return data.message;
+            }
+          ));
         }
+      },
+      mounted() {
+        this.loadDogs();
       }
     }).mount('#app');
   </script>
