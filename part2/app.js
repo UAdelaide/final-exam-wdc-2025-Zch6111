@@ -49,4 +49,15 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// Add logout route
+app.post('/api/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'Logout failed' });
+        }
+        res.clearCookie('connect.sid');
+        res.json({ success: true });
+    });
+});
+
 module.exports = app;
