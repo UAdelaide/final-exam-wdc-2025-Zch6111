@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 require('dotenv').config();
 const session = require('express-session');
+const db = require('./db');
 
 const app = express();
 
@@ -20,6 +21,28 @@ const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
+
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM Users WHERE username = ? AND password_hash = ?',
+            [username, password]
+        );
+        if (rows.length === 1) {
+            req.session.user = {
+                id: rows[0].user_id,
+                username: rows[0].username,
+                role: rows[0].role
+            };
+            res.json({ success: true, role: rows[0].role });
+        } else {
+            res.status(401).json({ success: false, message: 'Invalid credentials' });
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
 
 // Export the app instead of listening here
 module.exports = app;
