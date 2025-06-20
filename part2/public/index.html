@@ -16,7 +16,8 @@
       <h1>Welcome to the Dog Walking Service!</h1>
       <form @submit.prevent="login" style="background:#f8f9fa;padding:2em;border-radius:1em;max-width:400px;">
         <label>Username
-          <input v-model="username" required style="display:block;width:100%;margin-bottom:1em;background:#ffffcc;">
+          <input type="text" v-model="username" required
+            style="display:block;width:100%;margin-bottom:1em;background:#ffffcc;">
         </label>
         <label>Password
           <input type="password" v-model="password" required
@@ -30,10 +31,10 @@
     </div>
     <div v-else>
       <div v-if="role === 'owner'">
-        <script>window.location.href = 'owner-dashboard.html';</script>
+        Redirecting to Owner Dashboard...
       </div>
       <div v-else-if="role === 'walker'">
-        <script>window.location.href = 'walker-dashboard.html';</script>
+        Redirecting to Walker Dashboard...
       </div>
     </div>
   </div>
@@ -63,6 +64,11 @@
             if (data.success) {
               this.loggedIn = true;
               this.role = data.role;
+              if (data.role === 'owner') {
+                window.location.href = 'owner-dashboard.html';
+              } else if (data.role === 'walker') {
+                window.location.href = 'walker-dashboard.html';
+              }
             } else {
               this.error = data.message;
             }
