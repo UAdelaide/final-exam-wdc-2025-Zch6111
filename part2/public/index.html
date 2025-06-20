@@ -14,7 +14,7 @@
   <!-- Replace the main content with this login form and Vue logic -->
   <div id="app">
     <div v-if="!loggedIn">
-      <h1>Welcome to the Dog Walking Service!</h1>
+      <h1 class="text-primary">Welcome to the Dog Walking Service!</h1>
       <form @submit.prevent="login" style="background:#f8f9fa;padding:2em;border-radius:1em;max-width:400px;">
         <label>Username
           <input type="text" v-model="username" required
